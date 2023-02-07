@@ -9,6 +9,7 @@
 
     <bean id="fileService" class="kz.almaty.spring.service.FileServiceImpl">
         <constructor-arg index="0" ref="fileDao"/>
+        <constructor-arg index="1" value="storage.csv"/>
     </bean>
 
 </beans>

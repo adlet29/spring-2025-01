@@ -13,7 +13,7 @@ public class Main {
     public static void main(String[] args) throws IOException {
         ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("/spring-context.xml");
         FileService service = context.getBean(FileService.class);
-        File storage = service.generate("storage.csv");
+        File storage = service.generate();
         List<List<String>> listList = storage.getContent();
         System.out.println("file size: " + listList.size());
         for (List<String> list : listList) {
