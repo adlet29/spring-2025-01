@@ -27,7 +27,7 @@ public class ScannerUtil {
     }
 
     private List<String> getRecordFromLine(String line) {
-        List<String> values = new ArrayList<String>();
+        List<String> values = new ArrayList<>();
         try (Scanner rowScanner = new Scanner(line)) {
             rowScanner.useDelimiter("COMMA_DELIMITER");
             while (rowScanner.hasNext()) {
