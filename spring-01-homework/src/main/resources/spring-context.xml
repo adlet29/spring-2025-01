@@ -8,8 +8,12 @@
         <constructor-arg index="0" value="storage.csv"/>
     </bean>
 
-    <bean id="fileService" class="kz.almaty.spring.service.QuestionServiceImpl">
+    <bean id="questionService" class="kz.almaty.spring.service.QuestionServiceImpl">
         <constructor-arg index="0" ref="questionDao"/>
+    </bean>
+
+    <bean id="applicationRunner" class="kz.almaty.spring.service.ApplicationRunner">
+        <constructor-arg index="0" ref="questionService"/>
     </bean>
 
 </beans>
