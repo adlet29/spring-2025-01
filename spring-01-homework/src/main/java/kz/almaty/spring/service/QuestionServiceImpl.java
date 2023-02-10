@@ -1,7 +1,7 @@
 package kz.almaty.spring.service;
 
 import kz.almaty.spring.dao.QuestionDao;
-import kz.almaty.spring.model.Answer;
+import kz.almaty.spring.model.Option;
 import kz.almaty.spring.model.Question;
 
 import java.util.List;
@@ -18,7 +18,8 @@ public class QuestionServiceImpl implements QuestionService {
         List<Question> questionList =dao.findAll();
         for (Question question : questionList) {
             System.out.println(question.getText());
-            for (Answer answer : question.getAnswerList()) {
+            for (Option answer : question.getOptionList()) {
+                System.out.print(answer.getOption()+ ") ");
                 System.out.print(answer.getText()+ " ");
             }
             System.out.println();

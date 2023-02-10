@@ -4,18 +4,18 @@ import java.util.List;
 
 public class Question {
     private final String text;
-    private final List<Answer> answerList;
+    private final List<Option> optionList;
 
-    public Question(String text, List<Answer> answerList) {
+    public Question(String text, List<Option> list) {
         this.text = text;
-        this.answerList = answerList;
+        this.optionList = list;
     }
 
     public String getText() {
         return text;
     }
 
-    public List<Answer> getAnswerList() {
-        return answerList;
+    public List<Option> getOptionList() {
+        return optionList;
     }
 }

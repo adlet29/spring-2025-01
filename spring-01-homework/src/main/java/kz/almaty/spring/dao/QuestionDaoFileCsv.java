@@ -1,6 +1,6 @@
 package kz.almaty.spring.dao;
 
-import kz.almaty.spring.model.Answer;
+import kz.almaty.spring.model.Option;
 import kz.almaty.spring.model.Question;
 import kz.almaty.spring.util.ScannerUtil;
 import kz.almaty.spring.exceptions.ScannerIndexOutOfBoundsException;
@@ -33,20 +33,20 @@ public class QuestionDaoFileCsv implements QuestionDao {
         ScannerUtil scannerUtil = new ScannerUtil();
         try {
             List<List<String>> listList = scannerUtil.getRecords(name);
-            listList.remove(0);
+            String header = getHeaderLine(listList);
+            String[] headerArr = header.split(";");
             int j = 0;
+            listList.remove(0);
             for (List<String> list : listList) {
-                List<Answer> answerList = new ArrayList<>();
+                List<Option> answerList = new ArrayList<>();
                 for (String value : list) {
                     String[] arr = value.split(";");
                     if (j + 1 == Integer.parseInt(arr[0])) {
-                        for (int i = 0; i < arr.length; i++) {
-                            if (i > 1) {
-                                Answer answer = new Answer(arr[i]);
-                                answerList.add(answer);
-                            }
-                        }
-                        Question question = new Question(arr[1], answerList);
+                        answerList.add(new Option(arr[3], headerArr[3], arr[1].equals(headerArr[3])));
+                        answerList.add(new Option(arr[4], headerArr[4], arr[1].equals(headerArr[4])));
+                        answerList.add(new Option(arr[5], headerArr[5], arr[1].equals(headerArr[5])));
+                        answerList.add(new Option(arr[6], headerArr[6], arr[1].equals(headerArr[6])));
+                        Question question = new Question(arr[2], answerList);
                         questionList.add(question);
                     } else {
                         throw new ScannerIndexOutOfBoundsException("Given file item index is out of range");
@@ -54,13 +54,18 @@ public class QuestionDaoFileCsv implements QuestionDao {
                 }
                 j++;
             }
-            if (questionList.isEmpty()) {
-                throw new ScannerNullPointerException("File content is empty");
-            }
+
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
 
+    }
+
+    private String getHeaderLine(List<List<String>> listList) {
+        if (listList.isEmpty() || listList.get(0).isEmpty()) {
+            throw new ScannerNullPointerException("File content is empty");
+        }
+        return listList.get(0).get(0);
     }
 
 }
