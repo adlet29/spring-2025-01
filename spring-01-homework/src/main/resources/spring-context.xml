@@ -4,7 +4,7 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans
         http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-    <bean id="questionDao" class="kz.almaty.spring.dao.QuestionDaoSimple">
+    <bean id="questionDao" class="kz.almaty.spring.dao.QuestionDaoFileCsv">
         <constructor-arg index="0" value="storage.csv"/>
     </bean>
 

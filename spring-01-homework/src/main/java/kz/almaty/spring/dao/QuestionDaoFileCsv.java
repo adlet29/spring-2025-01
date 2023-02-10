@@ -8,10 +8,10 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class QuestionDaoSimple implements QuestionDao {
+public class QuestionDaoFileCsv implements QuestionDao {
     private final List<Question> questionList = new ArrayList<>();
 
-    public QuestionDaoSimple(String resourceName) {
+    public QuestionDaoFileCsv(String resourceName) {
         this.read(resourceName);
     }
 
