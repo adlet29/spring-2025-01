@@ -3,8 +3,8 @@ package kz.almaty.spring.dao;
 import kz.almaty.spring.model.Option;
 import kz.almaty.spring.model.Question;
 import kz.almaty.spring.util.ScannerUtil;
-import kz.almaty.spring.exceptions.ScannerIndexOutOfBoundsException;
-import kz.almaty.spring.exceptions.ScannerNullPointerException;
+import kz.almaty.spring.exceptions.FileIndexOutOfBoundsException;
+import kz.almaty.spring.exceptions.FileNullPointerException;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -16,9 +16,9 @@ public class QuestionDaoFileCsv implements QuestionDao {
     public QuestionDaoFileCsv(String resourceName) {
         try {
             this.read(resourceName);
-        } catch (ScannerNullPointerException e) {
+        } catch (FileNullPointerException e) {
             System.out.println("Content of csv file is empty");
-        } catch (ScannerIndexOutOfBoundsException e) {
+        } catch (FileIndexOutOfBoundsException e) {
             System.out.println("Invalid csv file");
         }
     }
@@ -49,7 +49,7 @@ public class QuestionDaoFileCsv implements QuestionDao {
                         Question question = new Question(arr[2], answerList);
                         questionList.add(question);
                     } else {
-                        throw new ScannerIndexOutOfBoundsException("Given file item index is out of range");
+                        throw new FileIndexOutOfBoundsException("Given file item index is out of range");
                     }
                 }
                 j++;
@@ -63,7 +63,7 @@ public class QuestionDaoFileCsv implements QuestionDao {
 
     private String getHeaderLine(List<List<String>> listList) {
         if (listList.isEmpty() || listList.get(0).isEmpty()) {
-            throw new ScannerNullPointerException("File content is empty");
+            throw new FileNullPointerException("File content is empty");
         }
         return listList.get(0).get(0);
     }
