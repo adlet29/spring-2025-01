@@ -7,9 +7,11 @@ import kz.almaty.spring.model.Question;
 import java.util.List;
 
 public class QuestionServiceImpl implements QuestionService {
+    private final IOService ioService;
     private final QuestionDao dao;
 
-    public QuestionServiceImpl(QuestionDao dao) {
+    public QuestionServiceImpl(IOService ioService, QuestionDao dao) {
+        this.ioService = ioService;
         this.dao = dao;
     }
 
@@ -17,12 +19,12 @@ public class QuestionServiceImpl implements QuestionService {
     public void showQuestions() {
         List<Question> questionList =dao.findAll();
         for (Question question : questionList) {
-            System.out.println(question.getText());
+            ioService.outputString(question.getText());
             for (Option answer : question.getOptionList()) {
-                System.out.print(answer.getOption()+ ") ");
-                System.out.print(answer.getText()+ " ");
+                ioService.outputStringSimple(answer.getOption()+ ") ");
+                ioService.outputStringSimple(answer.getText()+ " ");
             }
-            System.out.println();
+            ioService.outputString("");
         }
     }
 }
