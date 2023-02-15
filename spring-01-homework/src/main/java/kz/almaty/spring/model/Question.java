@@ -1,7 +1,5 @@
 package kz.almaty.spring.model;
 
-import java.util.List;
-
 public class Question {
     private String number;
     private String correct;
