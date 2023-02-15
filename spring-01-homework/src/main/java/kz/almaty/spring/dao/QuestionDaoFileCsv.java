@@ -11,28 +11,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class QuestionDaoFileCsv implements QuestionDao {
-    private List<Question> questionList;
+
+    private final String name;
 
     public QuestionDaoFileCsv(String resourceName) {
-        try {
-            this.read(resourceName);
-        } catch (FileNullPointerException e) {
-            System.out.println("Content of csv file is empty");
-        } catch (FileIndexOutOfBoundsException e) {
-            System.out.println("Invalid csv file");
-        }
+        this.name = resourceName;
     }
 
     @Override
     public List<Question> findAll() {
-        return questionList;
-    }
-
-    private void read(String name) {
-        questionList = new ArrayList<>();
+        List<Question> questionList = new ArrayList<>();
         ScannerUtil scannerUtil = new ScannerUtil();
         try {
-            List<List<String>> listList = scannerUtil.getRecords(name);
+            List<List<String>> listList = scannerUtil.getRecords(this.name);
             String header = getHeaderLine(listList);
             String[] headerArr = header.split(";");
             int j = 0;
@@ -59,7 +50,9 @@ public class QuestionDaoFileCsv implements QuestionDao {
             throw new RuntimeException(e);
         }
 
+        return questionList;
     }
+
 
     private String getHeaderLine(List<List<String>> listList) {
         if (listList.isEmpty() || listList.get(0).isEmpty()) {
