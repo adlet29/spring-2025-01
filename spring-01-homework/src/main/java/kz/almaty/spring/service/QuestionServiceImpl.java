@@ -19,12 +19,7 @@ public class QuestionServiceImpl implements QuestionService {
     public void showQuestions() {
         List<Question> questionList =dao.findAll();
         for (Question question : questionList) {
-            ioService.outputString(question.getText());
-            for (Option answer : question.getOptionList()) {
-                ioService.outputStringSimple(answer.getOption()+ ") ");
-                ioService.outputStringSimple(answer.getText()+ " ");
-            }
-            ioService.outputString("");
+            ioService.outputString(question.getQuestion());
         }
     }
 }

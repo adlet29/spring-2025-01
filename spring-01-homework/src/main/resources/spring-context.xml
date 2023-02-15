@@ -10,7 +10,7 @@
     </bean>
 
     <bean id="questionDao" class="kz.almaty.spring.dao.QuestionDaoFileCsv">
-        <constructor-arg index="0" value="storage.csv"/>
+        <constructor-arg index="0" value="test.csv"/>
     </bean>
 
     <bean id="questionService" class="kz.almaty.spring.service.QuestionServiceImpl">
