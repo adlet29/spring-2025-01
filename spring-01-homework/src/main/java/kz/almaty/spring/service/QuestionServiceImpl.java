@@ -1,7 +1,6 @@
 package kz.almaty.spring.service;
 
 import kz.almaty.spring.dao.QuestionDao;
-import kz.almaty.spring.model.Option;
 import kz.almaty.spring.model.Question;
 
 import java.util.List;
