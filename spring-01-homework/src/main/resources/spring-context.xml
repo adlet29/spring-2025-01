@@ -7,6 +7,8 @@
 
 
     <bean id="ioService" class="kz.almaty.spring.service.IOServiceStreams">
+        <constructor-arg index="0" value="#{ T(java.lang.System).out }"/>
+        <constructor-arg index="1" value="#{ T(java.lang.System).in }"/>
     </bean>
 
     <bean id="questionDao" class="kz.almaty.spring.dao.QuestionDaoFileCsv">

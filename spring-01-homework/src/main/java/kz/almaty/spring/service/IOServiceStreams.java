@@ -1,5 +1,6 @@
 package kz.almaty.spring.service;
 
+import java.io.InputStream;
 import java.io.PrintStream;
 import java.util.Scanner;
 
@@ -7,9 +8,9 @@ public class IOServiceStreams implements IOService {
     private final PrintStream output;
     private final Scanner input;
 
-    public IOServiceStreams() {
-        output = System.out;
-        input = new Scanner(System.in);
+    public IOServiceStreams(PrintStream outputStream, InputStream inputStream) {
+        output = outputStream;
+        input = new Scanner(inputStream);
     }
 
     @Override
