@@ -19,6 +19,14 @@ public class QuestionServiceImpl implements QuestionService {
         List<Question> questionList =dao.findAll();
         for (Question question : questionList) {
             ioService.outputString(question.getQuestion());
+            ioService.outputStringSimple(question.getOption1());
+            ioService.outputStringSimple(" ");
+            ioService.outputStringSimple(question.getOption2());
+            ioService.outputStringSimple(" ");
+            ioService.outputStringSimple(question.getOption3());
+            ioService.outputStringSimple(" ");
+            ioService.outputStringSimple(question.getOption4());
+            ioService.outputString("");
         }
     }
 }
