@@ -1,6 +1,6 @@
 number,correct,question,option1,option2,option3,option4
-1,option3,question1,value1,value2,value3,value4
-2,option1,question2,value2,value3,value4,value5
-3,option4,question3,value3,value4,value5,value6
-4,option2,question4,value4,value5,value6,value7
-5,option1,question5,value5,value6,value7,value8
+1,option3,Кто привез в Россию картофель?,Екатерина II,Петр Первый,Иван VI,Елизавета Петровна
+2,option1,В каких единицах измеряется сила тока?,Вольт,Ампер,Моль,Кельвин
+3,option4,Сколько волка ни корми а …?,он приходит,он все голодный,овцы целы,он все в лес смотрит
+4,option2,Не плюй в колодец...,в котором вода,в котором беда,из которого пьешь,из которого ведра носишь
+5,option1,Работа – не волк …,а притаившаяся овца,в лес не убежит,а кушать хочется,сама себя не сделает

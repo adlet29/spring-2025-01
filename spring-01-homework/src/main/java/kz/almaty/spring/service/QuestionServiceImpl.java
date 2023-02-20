@@ -21,8 +21,7 @@ public class QuestionServiceImpl implements QuestionService {
         for (Question question : questionList) {
             ioService.outputString(question.getText());
             for (Option option : question.getOptionList()) {
-                ioService.outputStringSimple(option.getOption() + ")");
-                ioService.outputStringSimple(option.getText() + " ");
+                ioService.outputString(option.getOption() + ") " + option.getText());
             }
             ioService.outputString("");
         }
