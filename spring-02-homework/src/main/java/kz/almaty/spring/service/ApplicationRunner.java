@@ -2,14 +2,18 @@ package kz.almaty.spring.service;
 
 public class ApplicationRunner {
 
-    private final QuestionService questionService;
+    private final MenuCommandsProcessor commandsProcessor;
+    private final IOService ioService;
 
-    public ApplicationRunner(QuestionService service) {
-        this.questionService = service;
+    public ApplicationRunner(IOService ioService, MenuCommandsProcessor commandsProcessor) {
+        this.ioService = ioService;
+        this.commandsProcessor = commandsProcessor;
     }
 
     public void run() {
-        questionService.showQuestions();
+        commandsProcessor.askLastName();
+        commandsProcessor.askFirstName();
+        commandsProcessor.askQuestion();
     }
 
 }
