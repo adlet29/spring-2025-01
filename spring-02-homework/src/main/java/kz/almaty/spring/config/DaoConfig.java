@@ -13,7 +13,6 @@ public class DaoConfig {
 
     @Bean
     public QuestionDao questionDao(@Value("${question.file.name}") String questionFileName ) {
-        System.out.println(questionFileName);
         return new QuestionDaoFileCsv(questionFileName);
     }
 
