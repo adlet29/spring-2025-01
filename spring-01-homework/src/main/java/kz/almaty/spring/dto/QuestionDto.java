@@ -11,12 +11,12 @@ public class QuestionDto {
     private String correct;
     @CsvBindByName(column = "question", required = true)
     private String question;
-    @CsvBindByName(column = "option1", required = true)
+    @CsvBindByName(column = "option1")
     private String option1;
-    @CsvBindByName(column = "option2", required = true)
+    @CsvBindByName(column = "option2")
     private String option2;
-    @CsvBindByName(column = "option3", required = true)
+    @CsvBindByName(column = "option3")
     private String option3;
-    @CsvBindByName(column = "option4", required = true)
+    @CsvBindByName(column = "option4")
     private String option4;
 }

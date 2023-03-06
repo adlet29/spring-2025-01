@@ -18,16 +18,16 @@ import java.util.List;
 
 public class QuestionDaoFileCsv implements QuestionDao {
 
-    private final String name;
+    private final String fileName;
 
-    public QuestionDaoFileCsv(String resourceName) {
-        this.name = resourceName;
+    public QuestionDaoFileCsv(String fileName) {
+        this.fileName = fileName;
     }
 
     @Override
     public List<Question> findAll() {
         List<Question> questions = new ArrayList<>();
-        try (BufferedReader bufferedReader = getFileFromResourceAsStreamReader(name);
+        try (BufferedReader bufferedReader = getFileFromResourceAsStreamReader(fileName);
              CSVReader reader = new CSVReader(bufferedReader)) {
             HeaderColumnNameMappingStrategy<QuestionDto> beanStrategy = new HeaderColumnNameMappingStrategy<>();
             beanStrategy.setType(QuestionDto.class);
