@@ -6,9 +6,9 @@ import lombok.Data;
 @Data
 public class QuestionDto {
     @CsvBindByName(column = "number", required = true)
-    private Integer number;
+    private int number;
     @CsvBindByName(column = "correct", required = true)
-    private String correct;
+    private int correct;
     @CsvBindByName(column = "question", required = true)
     private String question;
     @CsvBindByName(column = "option1")

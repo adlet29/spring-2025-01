@@ -1,5 +1,7 @@
 package kz.almaty.spring.service;
 
+import kz.almaty.spring.exceptions.OptionIndexOutOfBoundsException;
+
 public class ApplicationRunner {
 
     private final MenuCommandsProcessor commandsProcessor;
@@ -13,7 +15,12 @@ public class ApplicationRunner {
     public void run() {
         commandsProcessor.askLastName();
         commandsProcessor.askFirstName();
-        commandsProcessor.askQuestion();
+        try {
+            commandsProcessor.askQuestion();
+        } catch (NumberFormatException e) {
+            ioService.outputString("Error when entering numbers");
+        } catch (OptionIndexOutOfBoundsException e) {
+            ioService.outputString("Invalid option number entered");
+        }
     }
-
 }
