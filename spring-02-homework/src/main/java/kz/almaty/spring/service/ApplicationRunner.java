@@ -1,26 +1,21 @@
 package kz.almaty.spring.service;
 
-import kz.almaty.spring.exceptions.OptionIndexOutOfBoundsException;
+import org.springframework.stereotype.Component;
 
+@Component
 public class ApplicationRunner {
-
-    private final MenuCommandsProcessor commandsProcessor;
     private final IOService ioService;
 
-    public ApplicationRunner(IOService ioService, MenuCommandsProcessor commandsProcessor) {
+    private final QuestionService questionService;
+
+    public ApplicationRunner(IOService ioService, QuestionService questionService) {
         this.ioService = ioService;
-        this.commandsProcessor = commandsProcessor;
+        this.questionService = questionService;
     }
 
     public void run() {
-        commandsProcessor.askLastName();
-        commandsProcessor.askFirstName();
-        try {
-            commandsProcessor.askQuestion();
-        } catch (NumberFormatException e) {
-            ioService.outputString("Error when entering numbers");
-        } catch (OptionIndexOutOfBoundsException e) {
-            ioService.outputString("Invalid option number entered");
-        }
+        ioService.outputString("Run...");
+        var questions = questionService.getAll();
+        System.out.println(questions.get(0).getText());
     }
 }

@@ -2,9 +2,11 @@ package kz.almaty.spring.service;
 
 import kz.almaty.spring.dao.QuestionDao;
 import kz.almaty.spring.model.Question;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class QuestionServiceImpl implements QuestionService {
     private final IOService ioService;
     private final QuestionDao dao;

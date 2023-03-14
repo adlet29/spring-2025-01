@@ -8,6 +8,9 @@ import kz.almaty.spring.exceptions.FileNameIllegalArgumentException;
 import kz.almaty.spring.exceptions.ReaderRuntimeException;
 import kz.almaty.spring.model.Option;
 import kz.almaty.spring.model.Question;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.stereotype.Repository;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -16,11 +19,13 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
+@PropertySource("classpath:application.properties")
+@Repository
 public class QuestionDaoFileCsv implements QuestionDao {
 
     private final String fileName;
 
-    public QuestionDaoFileCsv(String fileName) {
+    public QuestionDaoFileCsv(@Value("${question.file.name}") String fileName) {
         this.fileName = fileName;
     }
 
