@@ -3,6 +3,7 @@ package kz.almaty.spring.service;
 import kz.almaty.spring.exceptions.OptionIndexOutOfBoundsException;
 import kz.almaty.spring.model.Option;
 import kz.almaty.spring.model.Question;
+import kz.almaty.spring.model.Person;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -11,19 +12,22 @@ import java.util.List;
 public class ApplicationRunner {
     private final IOService ioService;
 
+    private final PersonService personService;
+
     private final QuestionService questionService;
 
-    public ApplicationRunner(IOService ioService, QuestionService questionService) {
+
+    public ApplicationRunner(IOService ioService, PersonService personService, QuestionService questionService) {
         this.ioService = ioService;
+        this.personService = personService;
         this.questionService = questionService;
     }
 
     public void run() {
-        String lastName = ioService.readStringWithPrompt("Enter last name...");
-        String firstName = ioService.readStringWithPrompt("Enter first name...");
+        Person person = personService.getCurrentPerson();
         try {
             int point = this.askQuestions();
-            ioService.outputString(firstName + " " + lastName);
+            ioService.outputString(person.getFirstName() + " " + person.getLastName());
             ioService.outputString("Your result:" + " " + point);
         } catch (NumberFormatException e) {
             ioService.outputString("Error when entering numbers");
