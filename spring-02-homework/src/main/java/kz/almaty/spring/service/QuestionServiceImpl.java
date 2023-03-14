@@ -8,11 +8,9 @@ import java.util.List;
 
 @Service
 public class QuestionServiceImpl implements QuestionService {
-    private final IOService ioService;
     private final QuestionDao dao;
 
-    public QuestionServiceImpl(IOService ioService, QuestionDao dao) {
-        this.ioService = ioService;
+    public QuestionServiceImpl(QuestionDao dao) {
         this.dao = dao;
     }
 

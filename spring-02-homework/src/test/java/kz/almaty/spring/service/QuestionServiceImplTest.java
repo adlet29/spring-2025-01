@@ -17,9 +17,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class QuestionServiceImplTest {
 
     @Mock
-    private IOService ioService;
-
-    @Mock
     private QuestionDao questionDao;
 
     private QuestionService questionService;
@@ -27,7 +24,7 @@ public class QuestionServiceImplTest {
     @BeforeEach
     void setUp() {
         questionDao = new QuestionDaoFileCsv("test.csv");
-        questionService = new QuestionServiceImpl(ioService, questionDao);
+        questionService = new QuestionServiceImpl(questionDao);
     }
 
     @DisplayName("Получить вопросы теста для студентов")
