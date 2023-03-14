@@ -19,8 +19,20 @@ public class ApplicationRunner {
     }
 
     public void run() {
-        String firstName = ioService.readStringWithPrompt("Enter first name...");
         String lastName = ioService.readStringWithPrompt("Enter last name...");
+        String firstName = ioService.readStringWithPrompt("Enter first name...");
+        try {
+            int point = this.askQuestions();
+            ioService.outputString(firstName + " " + lastName);
+            ioService.outputString("Your result:" + " " + point);
+        } catch (NumberFormatException e) {
+            ioService.outputString("Error when entering numbers");
+        } catch (OptionIndexOutOfBoundsException e) {
+            ioService.outputString("Invalid option number entered");
+        }
+    }
+
+    private int askQuestions() {
         int point = 0;
         List<Question> questions = questionService.getAll();
         ioService.outputString("Questions:");
@@ -38,7 +50,7 @@ public class ApplicationRunner {
                 point++;
             }
         }
-        ioService.outputString( firstName + " " + lastName + " " + "Your result: " + point);
+        return point;
     }
 
     private static void checkOptionNumber(int optionNumber, int optionCount) {
