@@ -1,29 +1,21 @@
 package kz.almaty.spring.service;
 
 import kz.almaty.spring.dao.QuestionDao;
-import kz.almaty.spring.model.Option;
 import kz.almaty.spring.model.Question;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class QuestionServiceImpl implements QuestionService {
-    private final IOService ioService;
     private final QuestionDao dao;
 
-    public QuestionServiceImpl(IOService ioService, QuestionDao dao) {
-        this.ioService = ioService;
+    public QuestionServiceImpl(QuestionDao dao) {
         this.dao = dao;
     }
 
     @Override
-    public void showQuestions() {
-        List<Question> questionList =dao.findAll();
-        for (Question question : questionList) {
-            ioService.outputString(question.getText());
-            for (Option option : question.getOptionList()) {
-                ioService.outputString(option.getOption() + ") " + option.getText());
-            }
-            ioService.outputString("");
-        }
+    public List<Question> getAll() {
+        return dao.findAll();
     }
 }

@@ -5,10 +5,10 @@ import lombok.Data;
 @Data
 public class Option {
     private final String text;
-    private final String option;
-    private final Boolean isTrue;
+    private final int option;
+    private final boolean isTrue;
 
-    public Option(String text, String option, boolean isTrue) {
+    public Option(String text, int option, boolean isTrue) {
         this.text = text;
         this.option = option;
         this.isTrue = isTrue;
