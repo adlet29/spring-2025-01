@@ -15,6 +15,6 @@ public class PersonServiceImpl implements PersonService {
     public Person getCurrentPerson() {
         String lastName = ioService.readStringWithPrompt("Enter last name...");
         String firstName = ioService.readStringWithPrompt("Enter first name...");
-        return new Person(lastName, firstName);
+        return new Person(firstName, lastName);
     }
 }
