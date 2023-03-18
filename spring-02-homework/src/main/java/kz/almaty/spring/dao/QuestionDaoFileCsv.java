@@ -50,7 +50,7 @@ public class QuestionDaoFileCsv implements QuestionDao {
                 questions.add(new Question(questionDto.getQuestion(), options));
             }
         } catch (IOException e) {
-            throw new ReaderRuntimeException("problems reading the file!");
+            throw new ReaderRuntimeException("problems reading the file!", e);
         }
 
         return questions;
