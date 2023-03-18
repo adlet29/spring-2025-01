@@ -13,6 +13,8 @@ public class PersonServiceImpl implements PersonService {
 
     @Override
     public Person getCurrentPerson() {
-        return new Person(ioService.readStringWithPrompt("Enter last name..."), ioService.readStringWithPrompt("Enter first name..."));
+        String lastName = ioService.readStringWithPrompt("Enter last name...");
+        String firstName = ioService.readStringWithPrompt("Enter first name...");
+        return new Person(lastName, firstName);
     }
 }
