@@ -19,7 +19,6 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
-@PropertySource("classpath:application.properties")
 @Repository
 public class QuestionDaoFileCsv implements QuestionDao {
 
