@@ -15,5 +15,6 @@
     <modules>
         <module>xml-config</module>
         <module>stereotype-config</module>
+        <module>spring-boot</module>
     </modules>
 </project>
