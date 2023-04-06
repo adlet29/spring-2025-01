@@ -1,3 +1,5 @@
-question:
-  file:
-    name: 'test.csv'
+spring:
+  profiles:
+    active: "ru"
+  main:
+    banner-mode: "off"
