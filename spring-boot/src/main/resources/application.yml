@@ -2,4 +2,4 @@ spring:
   profiles:
     active: "ru"
   main:
-    banner-mode: "off"
+    banner-mode: console
