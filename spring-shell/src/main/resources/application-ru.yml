@@ -1,0 +1,4 @@
+language: ru_RU
+question:
+  file:
+    name: test_ru.csv

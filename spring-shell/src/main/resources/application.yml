@@ -1,0 +1,5 @@
+spring:
+  profiles:
+    active: "ru"
+  main:
+    banner-mode: console
