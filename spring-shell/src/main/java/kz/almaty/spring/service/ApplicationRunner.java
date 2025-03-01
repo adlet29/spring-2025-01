@@ -1,18 +1,18 @@
 package kz.almaty.spring.service;
 
-import jakarta.annotation.PostConstruct;
 import kz.almaty.spring.exceptions.OptionIndexOutOfBoundsException;
 import kz.almaty.spring.model.Option;
 import kz.almaty.spring.model.Person;
 import kz.almaty.spring.model.Question;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.MessageSource;
-import org.springframework.stereotype.Component;
+import org.springframework.shell.standard.ShellComponent;
+import org.springframework.shell.standard.ShellMethod;
 
 import java.util.List;
 import java.util.Locale;
 
-@Component
+@ShellComponent
 public class ApplicationRunner {
     private final IOService ioService;
 
@@ -33,7 +33,8 @@ public class ApplicationRunner {
         this.messageSource = messageSource;
         this.language = language;
     }
-    @PostConstruct
+
+    @ShellMethod(key = "start-test", value = "start testing")
     public void run() {
         Person person = personService.getCurrentPerson();
         try {
