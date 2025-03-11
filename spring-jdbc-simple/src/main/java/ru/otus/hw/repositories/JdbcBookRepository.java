@@ -3,9 +3,11 @@ package ru.otus.hw.repositories;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcOperations;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.stereotype.Repository;
+import ru.otus.hw.exceptions.EntityNotFoundException;
 import ru.otus.hw.models.Author;
 import ru.otus.hw.models.Book;
 import ru.otus.hw.models.Genre;
@@ -55,22 +57,43 @@ public class JdbcBookRepository implements BookRepository {
 
     @Override
     public void deleteById(long id) {
-        //...
+        Map<String, Object> params = Collections.singletonMap("id", id);
+        namedParameterJdbcOperations.update(
+                "delete from books where id = :id", params
+        );
     }
 
     private Book insert(Book book) {
         var keyHolder = new GeneratedKeyHolder();
-
-        //...
-
-        //noinspection DataFlowIssue
+        namedParameterJdbcOperations.update(
+                "insert into books (title, author_id, genre_id) values (:title, :author_id, :genre_id)",
+                new MapSqlParameterSource(Map.of(
+                        "title", book.getTitle(),
+                        "author_id", book.getAuthor().getId(),
+                        "genre_id", book.getGenre().getId()
+                )),
+                keyHolder,
+                new String[]{"id"}
+        );
         book.setId(keyHolder.getKeyAs(Long.class));
         return book;
     }
 
     private Book update(Book book) {
-        //...
-        // Выбросить EntityNotFoundException если не обновлено ни одной записи в БД
+        int updatedRows = namedParameterJdbcOperations.update(
+                "update books set title = :title, author_id = :author_id, genre_id = :genre_id where id = :id",
+                Map.of(
+                        "id", book.getId(),
+                        "title", book.getTitle(),
+                        "author_id", book.getAuthor().getId(),
+                        "genre_id", book.getGenre().getId()
+                )
+        );
+
+        if (updatedRows == 0) {
+            throw new EntityNotFoundException("Book with id %d not found".formatted(book.getId()));
+        }
+
         return book;
     }
 
