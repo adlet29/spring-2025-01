@@ -3,24 +3,26 @@ package ru.otus.hw.repositories;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.RowMapper;
-import org.springframework.jdbc.core.namedparam.NamedParameterJdbcOperations;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
-import ru.otus.hw.models.Author;
 import ru.otus.hw.models.Genre;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.*;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
 @Repository
 @RequiredArgsConstructor
 public class JdbcGenreRepository implements GenreRepository {
 
-    private final NamedParameterJdbcOperations namedParameterJdbcOperations;
+    private final NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
     @Override
     public List<Genre> findAll() {
-        return namedParameterJdbcOperations.query("select id, name from genres", new GnreRowMapper());
+        return namedParameterJdbcTemplate.query("select id, name from genres", new GnreRowMapper());
     }
 
     @Override
@@ -29,7 +31,7 @@ public class JdbcGenreRepository implements GenreRepository {
         Map<String, Object> params = Collections.singletonMap("id", id);
 
         try {
-            Genre genre = namedParameterJdbcOperations.queryForObject(
+            Genre genre = namedParameterJdbcTemplate.queryForObject(
                     "select id, name from genres where id = :id", params, new GnreRowMapper());
             return Optional.ofNullable(genre);
         } catch (EmptyResultDataAccessException e) {
