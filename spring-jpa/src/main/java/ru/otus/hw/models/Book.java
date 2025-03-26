@@ -3,6 +3,8 @@ package ru.otus.hw.models;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 import java.util.List;
 
@@ -10,7 +12,11 @@ import java.util.List;
 @NoArgsConstructor
 @Entity
 @Table(name = "books")
-@NamedEntityGraph(name = "books-author-and-genre-entity-graph", attributeNodes = {@NamedAttributeNode("author"), @NamedAttributeNode("genre")})
+@NamedEntityGraph(name = "book-author-genre-comments", attributeNodes = {
+        @NamedAttributeNode("author"),
+        @NamedAttributeNode("genre"),
+        @NamedAttributeNode("comments")
+})
 public class Book {
 
     public Book(long id, String title, Author author, Genre genre) {
@@ -36,6 +42,6 @@ public class Book {
     private Genre genre;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "book", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Comment> comment;
+    private List<Comment> comments;
 
 }

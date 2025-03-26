@@ -26,7 +26,7 @@ public class JpaBookRepository implements BookRepository {
 
     @Override
     public Optional<Book> findById(long id) {
-        EntityGraph<?> graph = em.getEntityGraph("books-author-and-genre-entity-graph");
+        EntityGraph<?> graph = em.getEntityGraph("book-author-genre-comments");
         Map<String, Object> hints = new HashMap<>();
         hints.put("javax.persistence.fetchgraph", graph);
         var book = em.find(Book.class, id, hints);
