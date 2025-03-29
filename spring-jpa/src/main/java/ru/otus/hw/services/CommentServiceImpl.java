@@ -45,6 +45,7 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
+    @Transactional(readOnly = false)
     public void deleteById(long id) {
         commentRepository.deleteById(id);
     }
