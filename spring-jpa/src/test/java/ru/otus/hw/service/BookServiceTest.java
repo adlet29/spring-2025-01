@@ -19,7 +19,7 @@ import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 @DisplayName("Интеграционный тест книг ")
 @SpringBootTest
 @TestPropertySource(properties = "spring.shell.interactive.enabled=false")
-class BookServiceimplTest {
+class BookServiceTest {
     @Autowired
     private BookService bookService;
 
@@ -40,7 +40,7 @@ class BookServiceimplTest {
     }
 
 
-    @DisplayName("Проверить, что доступ к связям, которые используются снаружи серивсов не вызывают LazyInitialzationException")
+    @DisplayName("Должен сохранить книгу и получить её с связанным автором и жанром")
     @Test
     void shouldInsertAndFetchBookWithRelations() {
 
@@ -56,6 +56,7 @@ class BookServiceimplTest {
         });
     }
 
+    @DisplayName("Должен обновить название книги и сохранить связи с автором и жанром")
     @DirtiesContext(methodMode = DirtiesContext.MethodMode.AFTER_METHOD)
     @Test
     void shouldUpdateBookAndPreserveRelations() {
@@ -68,6 +69,17 @@ class BookServiceimplTest {
             assertThat(updated.getAuthor().getFullName()).isEqualTo(testAuthor.getFullName());
             assertThat(updated.getGenre().getName()).isEqualTo(testGenre.getName());
         });
+    }
+
+    @DisplayName("Должен удалить книгу")
+    @Test
+    void shouldDeleteBook() {
+        var book = bookService.insert("BookTitle_4", testAuthor.getId(), testGenre.getId());
+        long id = book.getId();
+
+        bookService.deleteById(id);
+
+        assertThat(bookService.findById(id)).isEmpty();
     }
 
 }
