@@ -4,30 +4,33 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.context.annotation.Import;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.TestPropertySource;
 import ru.otus.hw.models.Author;
 import ru.otus.hw.models.Genre;
-import ru.otus.hw.repositories.AuthorRepository;
-import ru.otus.hw.repositories.GenreRepository;
-import ru.otus.hw.services.BookService;
+import ru.otus.hw.repositories.JpaAuthorRepository;
+import ru.otus.hw.repositories.JpaBookRepository;
+import ru.otus.hw.repositories.JpaGenreRepository;
+import ru.otus.hw.services.BookServiceImpl;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 @DisplayName("Интеграционный тест книг ")
-@SpringBootTest
+@DataJpaTest
+@Import({BookServiceImpl.class, JpaBookRepository.class, JpaAuthorRepository.class, JpaGenreRepository.class})
 @TestPropertySource(properties = "spring.shell.interactive.enabled=false")
 class BookServiceTest {
     @Autowired
-    private BookService bookService;
+    private BookServiceImpl bookService;
 
     @Autowired
-    private AuthorRepository authorRepository;
+    private JpaAuthorRepository authorRepository;
 
     @Autowired
-    private GenreRepository genreRepository;
+    private JpaGenreRepository genreRepository;
 
     private Author testAuthor;
 

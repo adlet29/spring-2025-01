@@ -4,18 +4,16 @@ import jakarta.persistence.EntityGraph;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import lombok.RequiredArgsConstructor;
-import org.springframework.jdbc.core.RowMapper;
-import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
-import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.stereotype.Repository;
 import ru.otus.hw.exceptions.EntityNotFoundException;
-import ru.otus.hw.models.Author;
 import ru.otus.hw.models.Book;
-import ru.otus.hw.models.Genre;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+
+import static org.springframework.data.jpa.repository.EntityGraph.EntityGraphType.FETCH;
 
 @Repository
 @RequiredArgsConstructor
@@ -26,7 +24,7 @@ public class JpaBookRepository implements BookRepository {
 
     @Override
     public Optional<Book> findById(long id) {
-        EntityGraph<?> graph = em.getEntityGraph("book-author-genre-comments");
+        EntityGraph<?> graph = em.getEntityGraph("book-with-author-and-genre");
         Map<String, Object> hints = new HashMap<>();
         hints.put("javax.persistence.fetchgraph", graph);
         var book = em.find(Book.class, id, hints);
@@ -35,8 +33,9 @@ public class JpaBookRepository implements BookRepository {
 
     @Override
     public List<Book> findAll() {
-        var bookTypedQuery = em.createQuery("select b from Book b " +
-                "left join fetch b.author left join fetch b.genre", Book.class);
+        EntityGraph<?> graph = em.getEntityGraph("book-with-author-and-genre");
+        var bookTypedQuery = em.createQuery("select b from Book b", Book.class);
+        bookTypedQuery.setHint(FETCH.getKey(), graph);
         return bookTypedQuery.getResultList();
     }
 

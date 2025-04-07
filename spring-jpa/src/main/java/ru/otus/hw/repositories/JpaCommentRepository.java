@@ -1,6 +1,5 @@
 package ru.otus.hw.repositories;
 
-import jakarta.persistence.EntityGraph;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import lombok.RequiredArgsConstructor;
@@ -8,9 +7,7 @@ import org.springframework.stereotype.Repository;
 import ru.otus.hw.exceptions.EntityNotFoundException;
 import ru.otus.hw.models.Comment;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 @Repository
@@ -22,10 +19,7 @@ public class JpaCommentRepository implements CommentRepository {
 
     @Override
     public Optional<Comment> findById(long id) {
-        EntityGraph<?> graph = em.getEntityGraph("comment-with-book");
-        Map<String, Object> hints = new HashMap<>();
-        hints.put("javax.persistence.fetchgraph", graph);
-        var comment = em.find(Comment.class, id, hints);
+        var comment = em.find(Comment.class, id);
         return Optional.ofNullable(comment);
     }
 

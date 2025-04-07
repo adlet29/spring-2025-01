@@ -11,10 +11,9 @@ import java.util.Objects;
 @NoArgsConstructor
 @Entity
 @Table(name = "books")
-@NamedEntityGraph(name = "book-author-genre-comments", attributeNodes = {
+@NamedEntityGraph(name = "book-with-author-and-genre", attributeNodes = {
         @NamedAttributeNode("author"),
-        @NamedAttributeNode("genre"),
-        @NamedAttributeNode("comments")
+        @NamedAttributeNode("genre")
 })
 public class Book {
 

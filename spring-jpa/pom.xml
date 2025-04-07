@@ -63,6 +63,12 @@
             <version>${reflections.version}</version>
         </dependency>
 
+        <dependency>
+            <groupId>org.flywaydb</groupId>
+            <artifactId>flyway-core</artifactId>
+            <version>9.20.0</version>
+        </dependency>
+
     </dependencies>
 
     <build>

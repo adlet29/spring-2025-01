@@ -9,9 +9,6 @@ import lombok.*;
 @NoArgsConstructor
 @Entity
 @Table(name = "comments")
-@NamedEntityGraph(name = "comment-with-book", attributeNodes = {
-        @NamedAttributeNode("book")
-})
 public class Comment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

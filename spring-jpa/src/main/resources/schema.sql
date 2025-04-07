@@ -25,4 +25,4 @@ create table comments (
     primary key (id)
 );
 
-alter table if exists comments add constraint FK1ey8gegnanvybix5a025vepf4 foreign key (book_id) references books
+alter table if exists comments add constraint FK1ey8gegnanvybix5a025vepf4 foreign key (book_id) references books;

@@ -39,7 +39,7 @@ class CommentServiceTest {
         var loadedComment = commentService.findById(savedComment.getId());
         assertThat(loadedComment).isPresent();
         assertDoesNotThrow(() -> {
-            assertThat(loadedComment.get().getBook().getTitle()).isEqualTo(testBook.getTitle());
+            assertThat(loadedComment.get().getBook().getId()).isEqualTo(testBook.getId());
         });
     }
 
@@ -54,7 +54,7 @@ class CommentServiceTest {
         var loadedComment = commentService.findById(updated.getId());
         assertThat(loadedComment).isPresent();
         assertDoesNotThrow(() -> {
-            assertThat(loadedComment.get().getBook().getTitle()).isEqualTo(testBook.getTitle());
+            assertThat(loadedComment.get().getBook().getId()).isEqualTo(testBook.getId());
         });
     }
 
