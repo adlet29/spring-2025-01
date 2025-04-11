@@ -27,7 +27,7 @@ public class BookCommands {
     @ShellMethod(value = "Find book by id", key = "bbid")
     public String findBookById(long id) {
         return bookService.findById(id)
-                .map(bookConverter::bookWithCommentsToString)
+                .map(bookConverter::bookToString)
                 .orElse("Book with id %d not found".formatted(id));
     }
 
