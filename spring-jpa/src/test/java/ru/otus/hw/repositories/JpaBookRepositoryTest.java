@@ -7,6 +7,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.context.annotation.Import;
 import ru.otus.hw.models.Author;
 import ru.otus.hw.models.Book;
@@ -25,6 +26,9 @@ class JpaBookRepositoryTest {
 
     @Autowired
     private JpaBookRepository repositoryJpa;
+
+    @Autowired
+    private TestEntityManager entityManager;
 
     private List<Author> dbAuthors;
     private List<Genre> dbGenres;
@@ -72,9 +76,8 @@ class JpaBookRepositoryTest {
                 .matches(book -> book.getId() > 0)
                 .usingRecursiveComparison().ignoringExpectedNullFields().isEqualTo(expectedBook);
 
-        assertThat(repositoryJpa.findById(returnedBook.getId()))
-                .isPresent()
-                .get()
+        assertThat(entityManager.find(Book.class, returnedBook.getId()))
+                .isNotNull()
                 .isEqualTo(returnedBook);
     }
 
@@ -83,9 +86,8 @@ class JpaBookRepositoryTest {
     void shouldSaveUpdatedBook() {
         var expectedBook = new Book(1L, "BookTitle_10500", dbAuthors.get(2), dbGenres.get(2));
 
-        assertThat(repositoryJpa.findById(expectedBook.getId()))
-                .isPresent()
-                .get()
+        assertThat(entityManager.find(Book.class, expectedBook.getId()))
+                .isNotNull()
                 .extracting(Book::getTitle)
                 .isNotEqualTo(expectedBook.getTitle());
 
@@ -94,18 +96,17 @@ class JpaBookRepositoryTest {
                 .matches(book -> book.getId() > 0)
                 .usingRecursiveComparison().ignoringExpectedNullFields().isEqualTo(expectedBook);
 
-        assertThat(repositoryJpa.findById(returnedBook.getId()))
-                .isPresent()
-                .get()
+        assertThat(entityManager.find(Book.class, returnedBook.getId()))
+                .isNotNull()
                 .isEqualTo(returnedBook);
     }
 
     @DisplayName("должен удалять книгу по id ")
     @Test
     void shouldDeleteBook() {
-        assertThat(repositoryJpa.findById(1L)).isPresent();
+        assertThat(entityManager.find(Book.class, 1L)).isNotNull();
         repositoryJpa.deleteById(1L);
-        assertThat(repositoryJpa.findById(1L)).isEmpty();
+        assertThat(entityManager.find(Book.class, 1L)).isNull();
     }
 
     private static List<Author> getDbAuthors() {
