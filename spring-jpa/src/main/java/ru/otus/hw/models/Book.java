@@ -13,18 +13,19 @@ import jakarta.persistence.NamedAttributeNode;
 import jakarta.persistence.NamedEntityGraph;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.List;
-import java.util.Objects;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @Entity
 @Table(name = "books")
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @NamedEntityGraph(name = "book-with-author-and-genre", attributeNodes = {
         @NamedAttributeNode("author"),
         @NamedAttributeNode("genre")
@@ -33,6 +34,7 @@ public class Book {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @EqualsAndHashCode.Include
     private long id;
 
     @Column(name = "title", unique = true, nullable = false)
@@ -54,22 +56,6 @@ public class Book {
         this.title = title;
         this.author = author;
         this.genre = genre;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (!(o instanceof Book book)) {
-            return false;
-        }
-        return Objects.equals(id, book.id);
-    }
-
-    @Override
-    public int hashCode() {
-        return getClass().hashCode();
     }
 
 }
