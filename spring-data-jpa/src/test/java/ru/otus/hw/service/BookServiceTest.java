@@ -10,9 +10,9 @@ import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.TestPropertySource;
 import ru.otus.hw.models.Author;
 import ru.otus.hw.models.Genre;
-import ru.otus.hw.repositories.JpaAuthorRepository;
-import ru.otus.hw.repositories.JpaBookRepository;
-import ru.otus.hw.repositories.JpaGenreRepository;
+import ru.otus.hw.repositories.AuthorRepository;
+import ru.otus.hw.repositories.BookRepository;
+import ru.otus.hw.repositories.GenreRepository;
 import ru.otus.hw.services.BookServiceImpl;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -20,17 +20,17 @@ import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 @DisplayName("Интеграционный тест книг ")
 @DataJpaTest
-@Import({BookServiceImpl.class, JpaBookRepository.class, JpaAuthorRepository.class, JpaGenreRepository.class})
+@Import({BookServiceImpl.class, BookRepository.class, AuthorRepository.class, GenreRepository.class})
 @TestPropertySource(properties = "spring.shell.interactive.enabled=false")
 class BookServiceTest {
     @Autowired
     private BookServiceImpl bookService;
 
     @Autowired
-    private JpaAuthorRepository authorRepository;
+    private AuthorRepository authorRepository;
 
     @Autowired
-    private JpaGenreRepository genreRepository;
+    private GenreRepository genreRepository;
 
     private Author testAuthor;
 
