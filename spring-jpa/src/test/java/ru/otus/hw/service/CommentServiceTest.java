@@ -4,22 +4,28 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.context.annotation.Import;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.TestPropertySource;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 import ru.otus.hw.models.Book;
 import ru.otus.hw.repositories.BookRepository;
-import ru.otus.hw.services.CommentService;
+import ru.otus.hw.repositories.JpaBookRepository;
+import ru.otus.hw.repositories.JpaCommentRepository;
+import ru.otus.hw.services.CommentServiceImpl;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 @DisplayName("Интеграционный тест комментариев ")
-@SpringBootTest
+@DataJpaTest
+@Import({CommentServiceImpl.class, JpaBookRepository.class, JpaCommentRepository.class})
 @TestPropertySource(properties = "spring.shell.interactive.enabled=false")
 class CommentServiceTest {
     @Autowired
-    private CommentService commentService;
+    private CommentServiceImpl commentService;
 
     @Autowired
     private BookRepository bookRepository;
@@ -33,6 +39,7 @@ class CommentServiceTest {
 
     @DisplayName("Должен сохранить комментарий книге и получить с книгой")
     @Test
+    @Transactional(propagation = Propagation.NOT_SUPPORTED)
     void shouldInsertAndFetchCommentWithRelations() {
         var savedComment = commentService.insert("comment_4", testBook.getId());
         assertThat(savedComment).isNotNull();
@@ -46,6 +53,7 @@ class CommentServiceTest {
     @DisplayName("Должен обновить комментарий и сохранить связи с книгой")
     @DirtiesContext(methodMode = DirtiesContext.MethodMode.AFTER_METHOD)
     @Test
+    @Transactional(propagation = Propagation.NOT_SUPPORTED)
     void shouldUpdateAndFetchCommentWithRelations() {
         var savedComment = commentService.insert("comment_4", testBook.getId());
         var updated = commentService.update(savedComment.getId(), "comment_5", testBook.getId());
@@ -60,6 +68,7 @@ class CommentServiceTest {
 
     @DisplayName("Должен удалить комментарий")
     @Test
+    @Transactional(propagation = Propagation.NOT_SUPPORTED)
     void shouldDeleteComment() {
         var book = commentService.insert("comment_4", testBook.getId());
         long bookId = book.getId();

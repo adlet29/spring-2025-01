@@ -8,6 +8,8 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.TestPropertySource;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 import ru.otus.hw.models.Author;
 import ru.otus.hw.models.Genre;
 import ru.otus.hw.repositories.JpaAuthorRepository;
@@ -45,6 +47,7 @@ class BookServiceTest {
 
     @DisplayName("Должен сохранить книгу и получить её с связанным автором и жанром")
     @Test
+    @Transactional(propagation = Propagation.NOT_SUPPORTED)
     void shouldInsertAndFetchBookWithRelations() {
 
         var savedBook = bookService.insert("BookTitle_4", testAuthor.getId(), testGenre.getId());
@@ -62,6 +65,7 @@ class BookServiceTest {
     @DisplayName("Должен обновить название книги и сохранить связи с автором и жанром")
     @DirtiesContext(methodMode = DirtiesContext.MethodMode.AFTER_METHOD)
     @Test
+    @Transactional(propagation = Propagation.NOT_SUPPORTED)
     void shouldUpdateBookAndPreserveRelations() {
         var book = bookService.insert("BookTitle_4", testAuthor.getId(), testGenre.getId());
 
@@ -76,6 +80,7 @@ class BookServiceTest {
 
     @DisplayName("Должен удалить книгу")
     @Test
+    @Transactional(propagation = Propagation.NOT_SUPPORTED)
     void shouldDeleteBook() {
         var book = bookService.insert("BookTitle_4", testAuthor.getId(), testGenre.getId());
         long id = book.getId();
