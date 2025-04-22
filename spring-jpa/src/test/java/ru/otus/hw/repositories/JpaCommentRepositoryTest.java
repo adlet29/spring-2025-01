@@ -90,7 +90,7 @@ class JpaCommentRepositoryTest {
                 .isEqualTo(returnedComment);
     }
 
-    @DisplayName("должен удалять книгу по id ")
+    @DisplayName("должен удалять комментарий по id ")
     @Test
     void shouldDeleteBook() {
         assertThat(entityManager.find(Comment.class, 1L)).isNotNull();
