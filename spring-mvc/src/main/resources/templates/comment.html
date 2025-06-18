@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Book comments</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="css/library.css">
+</head>
+<body>
+<div id=tablediv>
+    <h2>Book comments</h2>
+    <table class="table" id="bookstable">
+        <thead>
+        <tr>
+            <th>Comment</th>
+        </tr>
+        </thead>
+        <tbody id="tablebody">
+        <div th:each="comment : ${comments}">
+            <tr>
+                <td th:text="${comment.getText()}">Comment</td>
+            </tr>
+        </div>
+        </tbody>
+    </table>
+</div><br/>
+<div id="back">
+    <a class="btn btn-default" th:href="@{/}" href="edit.html">Back</a>
+</div>
+</body>
+</html>
