@@ -4,8 +4,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import ru.otus.hw.dto.BookDto;
 import ru.otus.hw.services.AuthorService;
 import ru.otus.hw.services.BookService;
 import ru.otus.hw.services.GenreService;
@@ -31,41 +33,33 @@ public class BookController {
         return "index";
     }
 
-    @PostMapping("/add")
-    public String addBook(@RequestParam String title,
-                          @RequestParam Long authorId,
-                          @RequestParam Long genreId,
-                          Model model) {
-        var book = bookService.insert(title, authorId, genreId);
-        model.addAttribute("addResult", book != null);
+    @PostMapping("/book")
+    public String createBook(BookDto bookDto) {
+        bookService.insert(bookDto.getTitle(), bookDto.getAuthorId(), bookDto.getGenreId());
         return "redirect:/";
     }
 
-    @GetMapping("/edit")
-    public String showBookForEdit(@RequestParam(name = "id") Long id, Model model) {
+    @GetMapping("/book/{id}")
+    public String showBook(@PathVariable Long id, Model model) {
         var optionalBook = bookService.findById(id);
-        if (optionalBook.isPresent()) {
-            var book = optionalBook.get();
-            model.addAttribute("book", book);
-        }
+        optionalBook.ifPresent(book -> model.addAttribute("book", book));
         return "edit";
     }
 
-    @GetMapping("/update")
-    public String updateBook(@RequestParam(name = "title") String title,
-                             @RequestParam(name = "id") Long id,
-                             Model model) {
+    @PostMapping("/book/{id}")
+    public String updateBook(@PathVariable Long id, @RequestParam(name = "title") String title, Model model) {
         var optionalBook = bookService.findById(id);
-        if (optionalBook.isPresent() && !"".equals(title)) {
-            var bookCurrent = optionalBook.get();
-            var book = bookService.update(id, title, bookCurrent.getAuthor().getId(), bookCurrent.getGenre().getId());
+        optionalBook.ifPresent(bookCurrent -> {
+            var book = bookService.update(id, title,
+                    bookCurrent.getAuthor().getId(),
+                    bookCurrent.getGenre().getId());
             model.addAttribute("book", book);
-        }
+        });
         return "edit";
     }
 
-    @GetMapping("/delete")
-    public String deleteBook(@RequestParam(name = "id") Long id) {
+    @PostMapping("/book/{id}/delete")
+    public String deleteBook(@PathVariable Long id) {
         bookService.deleteById(id);
         return "redirect:/";
     }

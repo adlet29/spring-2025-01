@@ -23,18 +23,16 @@
                 <td th:text="${book.author.getFullName()}">authors</td>
                 <td th:text="${book.genre.getName()}">genre</td>
                 <td>
-                    <a class="btn btn-default" th:href="@{/edit(id=${book.id})}" href="edit.html">Edit</a>
+                    <a class="btn btn-default" th:href="@{/book/{id}(id=${book.id})}">Edit</a>
                 </td>
                 <td>
-                    <form id="deleteform" action="/delete" method="get">
-                        <input type="hidden" name="id" th:value="${book.id}">
-                        <input class="btn btn-default" type="submit" value="Delete">
+                    <form th:action="@{/book/{id}/delete(id=${book.id})}" method="post">
+                        <input class="btn btn-default" type="submit" value="Delete" />
                     </form>
                 </td>
                 <td>
-                    <form id="commentform" action="/comment" method="get">
-                        <input type="hidden" name="id" th:value="${book.id}">
-                        <input class="btn btn-default" type="submit" value="View comments">
+                    <form id="commentform" th:action="@{/book/{id}/comments(id=${book.id})}" method="get">
+                        <input class="btn btn-default" type="submit" value="View comments" />
                     </form>
                 </td>
             </tr>
@@ -44,7 +42,7 @@
 </div><br/>
 <div id="add">
     <h2>Add new Book</h2>
-    <form id="addform" class="form-horizontal" action="/add" method="post">
+    <form id="addform" class="form-horizontal" action="/book" method="POST">
         <div class="form-group">
             <div class="col-sm-10">
                 <label for="author">Authors</label>
@@ -77,11 +75,6 @@
             <div class="col-sm-10">
                 <input class="btn btn-default" type="submit" value="Submit">
             </div>
-        </div>
-        <div th:switch="${addResult}">
-            <p th:case="null"></p>
-            <p th:case="true" class="goodMsg">Книга успешно добавлена</p>
-            <p th:case="false" class="badMsg">Что-то пошло не так...</p>
         </div>
     </form><br/>
 </div>
