@@ -21,7 +21,6 @@ import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 @DisplayName("Интеграционный тест комментариев ")
 @DataJpaTest
 @Import({CommentServiceImpl.class})
-@TestPropertySource(properties = "spring.shell.interactive.enabled=false")
 @Transactional(propagation = Propagation.NOT_SUPPORTED)
 class CommentServiceTest {
     @Autowired

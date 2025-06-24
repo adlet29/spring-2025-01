@@ -22,7 +22,6 @@ import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 @DisplayName("Интеграционный тест книг ")
 @DataJpaTest
 @Import({BookServiceImpl.class})
-@TestPropertySource(properties = "spring.shell.interactive.enabled=false")
 @Transactional(propagation = Propagation.NOT_SUPPORTED)
 class BookServiceTest {
     @Autowired
