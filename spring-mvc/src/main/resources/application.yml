@@ -4,8 +4,8 @@ spring:
   sql:
     init:
       mode: always
-      data-locations: classpath:/db/migration/data.sql
-      schema-locations: classpath:/db/migration/schema.sql
+      data-locations: data.sql
+      schema-locations: schema.sql
   jpa:
     show-sql: true
     hibernate:

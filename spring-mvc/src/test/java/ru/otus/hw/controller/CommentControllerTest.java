@@ -28,7 +28,7 @@ class CommentControllerTest {
     @Test
     @DisplayName("отображение страницы со списком комментариев")
     void testListPage() throws Exception {
-        mockMvc.perform(get("/comment").param("id", "1"))
+        mockMvc.perform(get("/book/1/comments"))
                 .andExpect(status().isOk())
                 .andExpect(view().name("comment"))
                 .andExpect(model().attributeExists("comments"));

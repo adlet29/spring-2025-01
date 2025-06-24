@@ -3,12 +3,10 @@ package ru.otus.hw.controller;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import ru.otus.hw.controllers.BookController;
 import ru.otus.hw.models.Author;
 import ru.otus.hw.models.Book;
@@ -21,8 +19,8 @@ import java.util.Optional;
 
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verify;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.redirectedUrl;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -75,7 +73,7 @@ class BookControllerTest {
     void testAddBook() throws Exception {
         given(bookService.insert("New Book", 1L, 1L)).willReturn(book);
 
-        mockMvc.perform(post("/add")
+        mockMvc.perform(post("/book")
                         .param("title", "New Book")
                         .param("authorId", "1")
                         .param("genreId", "1"))
@@ -90,7 +88,7 @@ class BookControllerTest {
     void testShowBookForEdit() throws Exception {
         given(bookService.findById(1L)).willReturn(Optional.of(book));
 
-        mockMvc.perform(get("/edit").param("id", "1"))
+        mockMvc.perform(get("/book/1"))
                 .andExpect(status().isOk())
                 .andExpect(view().name("edit"))
                 .andExpect(model().attributeExists("book"));
@@ -99,9 +97,29 @@ class BookControllerTest {
     }
 
     @Test
+    @DisplayName("обновление книги и возврат на главную страницу")
+    void testUpdateBook() throws Exception {
+        var bookId = 1L;
+        var updatedTitle = "BookTitle_5";
+        Book updatedBook = new Book(bookId, updatedTitle, author, genre);
+
+        given(bookService.findById(bookId)).willReturn(Optional.of(book));
+        given(bookService.update(bookId, updatedTitle, author.getId(), genre.getId()))
+                .willReturn(updatedBook);
+
+        mockMvc.perform(post("/book/{id}", bookId)
+                        .param("title", updatedTitle))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(redirectedUrl("/"));
+
+        verify(bookService).findById(bookId);
+        verify(bookService).update(bookId, updatedTitle, author.getId(), genre.getId());
+    }
+
+    @Test
     @DisplayName("удаление книги и редирект на главную страницу")
     void testDeleteBook() throws Exception {
-        mockMvc.perform(get("/delete").param("id", "1"))
+        mockMvc.perform(post("/book/1/delete"))
                 .andExpect(status().is3xxRedirection())
                 .andExpect(redirectedUrl("/"));
 

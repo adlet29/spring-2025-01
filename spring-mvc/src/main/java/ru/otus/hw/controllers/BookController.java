@@ -47,15 +47,11 @@ public class BookController {
     }
 
     @PostMapping("/book/{id}")
-    public String updateBook(@PathVariable Long id, @RequestParam(name = "title") String title, Model model) {
+    public String updateBook(@PathVariable Long id, @RequestParam(name = "title") String title) {
         var optionalBook = bookService.findById(id);
-        optionalBook.ifPresent(bookCurrent -> {
-            var book = bookService.update(id, title,
-                    bookCurrent.getAuthor().getId(),
-                    bookCurrent.getGenre().getId());
-            model.addAttribute("book", book);
-        });
-        return "edit";
+        optionalBook.ifPresent(bookCurrent -> bookService.update(id, title, bookCurrent.getAuthor().getId(),
+                bookCurrent.getGenre().getId()));
+        return "redirect:/";
     }
 
     @PostMapping("/book/{id}/delete")
