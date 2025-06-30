@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Library</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="css/library.css">
+</head>
+<body>
+<div id=tablediv>
+    <h1>Library</h1>
+    <table class="table" id="bookstable">
+        <thead>
+        <tr>
+            <th>Book id</th><th>Title</th><th>Authors</th><th>Genre</th><th>Action</th>
+        </tr>
+        </thead>
+        <tbody id="tablebody">
+        <div th:each="book : ${books}">
+            <tr>
+                <td th:text="${book.id}">id</td>
+                <td th:text="${book.title}">title</td>
+                <td th:text="${book.author.getFullName()}">authors</td>
+                <td th:text="${book.genre.getName()}">genre</td>
+                <td>
+                    <a class="btn btn-default" th:href="@{/book/{id}(id=${book.id})}">Edit</a>
+                </td>
+                <td>
+                    <form th:action="@{/book/{id}/delete(id=${book.id})}" method="post">
+                        <input class="btn btn-default" type="submit" value="Delete" />
+                    </form>
+                </td>
+                <td>
+                    <form id="commentform" th:action="@{/book/{id}/comments(id=${book.id})}" method="get">
+                        <input class="btn btn-default" type="submit" value="View comments" />
+                    </form>
+                </td>
+            </tr>
+        </div>
+        </tbody>
+    </table>
+</div><br/>
+<div id="add">
+    <h2>Add new Book</h2>
+    <form id="addform" class="form-horizontal" action="/book" method="POST">
+        <div class="form-group">
+            <div class="col-sm-10">
+                <label for="author">Authors</label>
+                <select id="author" class="form-control" name="authorId" required>
+                    <option value="">-- Выберите автора --</option>
+                    <option th:each="author : ${authors}"
+                            th:value="${author.id}"
+                            th:text="${author.getFullName()}"></option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-10">
+                <label for="title">Title</label>
+                <input id="title" class="form-control" type="text" name="title" required>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-10">
+                <label for="genre">Genre</label>
+                <select id="genre" class="form-control" name="genreId" required>
+                    <option value="">-- Выберите жанр --</option>
+                    <option th:each="genre : ${genres}"
+                            th:value="${genre.id}"
+                            th:text="${genre.getName()}"></option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-10">
+                <input class="btn btn-default" type="submit" value="Submit">
+            </div>
+        </div>
+    </form><br/>
+</div>
+
+
+</body>
+</html>
